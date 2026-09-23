@@ -1,29 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <!-- Apply saved theme before CSS renders, to avoid a light-mode flash -->
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem("theme");
+        var theme = savedTheme === "dark" ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solutions — The Thaw Line</title>
-  <meta name="description" content="What actually helps: from household choices to the systemic changes that matter most.">
+  <meta name="description"
+    content="What actually helps: from household choices to the systemic changes that matter most.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
   <header class="site-header">
     <nav class="nav">
       <a href="index.html" class="brand"><span class="brand-mark"></span>The Thaw Line</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="causes.html">Causes</a></li>
-        <li><a href="effects.html">Effects</a></li>
-        <li><a href="solutions.html">Solutions</a></li>
-      </ul>
-      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="causes.html">Causes</a></li>
+          <li><a href="effects.html">Effects</a></li>
+          <li><a href="solutions.html">Solutions</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false"
+          aria-label="Switch to dark mode">
+          <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+          <span class="theme-toggle-label">Dark</span>
+        </button>
+        <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </nav>
   </header>
 
@@ -32,7 +56,8 @@
       <div class="wrap">
         <span class="eyebrow">03 — Solutions</span>
         <h1>What actually moves the needle</h1>
-        <p>Individual choices matter, but the biggest gains come from decisions made at the scale of energy grids, transport systems, and land use. Real progress uses both at once.</p>
+        <p>Individual choices matter, but the biggest gains come from decisions made at the scale of energy grids,
+          transport systems, and land use. Real progress uses both at once.</p>
       </div>
     </section>
 
@@ -41,11 +66,16 @@
         <div class="explainer-text">
           <span class="eyebrow">Systemic change</span>
           <h2>The shift already underway</h2>
-          <p>Renewable electricity — mainly solar and wind — is now the cheapest source of new power generation in most of the world, which is why it's being built faster than any energy source in history. Pairing that with electrified transport and more efficient buildings covers the largest share of the emissions cuts needed this decade.</p>
-          <p>Protecting and restoring forests, wetlands, and soils adds a second lever: these ecosystems can pull carbon back out of the atmosphere rather than only avoiding new emissions.</p>
+          <p>Renewable electricity — mainly solar and wind — is now the cheapest source of new power generation in most
+            of the world, which is why it's being built faster than any energy source in history. Pairing that with
+            electrified transport and more efficient buildings covers the largest share of the emissions cuts needed
+            this decade.</p>
+          <p>Protecting and restoring forests, wetlands, and soils adds a second lever: these ecosystems can pull carbon
+            back out of the atmosphere rather than only avoiding new emissions.</p>
         </div>
         <div class="diagram">
-          <svg viewBox="0 0 420 320" role="img" aria-label="Illustration of a wind turbine and solar panels next to a growing tree, representing renewable energy and reforestation">
+          <svg viewBox="0 0 420 320" role="img"
+            aria-label="Illustration of a wind turbine and solar panels next to a growing tree, representing renewable energy and reforestation">
             <line x1="90" y1="280" x2="90" y2="60" stroke="#1F3D33" stroke-width="4"></line>
             <circle cx="90" cy="60" r="5" fill="#1F3D33"></circle>
             <g stroke="#1F3D33" stroke-width="4" stroke-linecap="round">
@@ -75,49 +105,56 @@
         <div class="section-head">
           <span class="eyebrow">Where to start</span>
           <h2>Everyday actions with real impact</h2>
-          <p>These won't solve the problem alone, but they add up, and several of them also shape demand for cleaner systems.</p>
+          <p>These won't solve the problem alone, but they add up, and several of them also shape demand for cleaner
+            systems.</p>
         </div>
         <ul class="checklist">
           <li>
             <span class="mark"></span>
             <span>
               <strong>Rethink transport</strong>
-              <span>Walking, cycling, public transit, or an electric vehicle can cut personal transport emissions dramatically, especially for daily commutes.</span>
+              <span>Walking, cycling, public transit, or an electric vehicle can cut personal transport emissions
+                dramatically, especially for daily commutes.</span>
             </span>
           </li>
           <li>
             <span class="mark"></span>
             <span>
               <strong>Cut food waste</strong>
-              <span>Around a third of all food produced is wasted, and wasted food still carries the full emissions cost of growing, transporting, and disposing of it.</span>
+              <span>Around a third of all food produced is wasted, and wasted food still carries the full emissions cost
+                of growing, transporting, and disposing of it.</span>
             </span>
           </li>
           <li>
             <span class="mark"></span>
             <span>
               <strong>Shift your plate</strong>
-              <span>Eating less red meat and dairy — even a few days a week — meaningfully lowers the methane and land-use footprint of your diet.</span>
+              <span>Eating less red meat and dairy — even a few days a week — meaningfully lowers the methane and
+                land-use footprint of your diet.</span>
             </span>
           </li>
           <li>
             <span class="mark"></span>
             <span>
               <strong>Improve home efficiency</strong>
-              <span>Better insulation, efficient appliances, and switching to electric heating reduce both emissions and energy bills over time.</span>
+              <span>Better insulation, efficient appliances, and switching to electric heating reduce both emissions and
+                energy bills over time.</span>
             </span>
           </li>
           <li>
             <span class="mark"></span>
             <span>
               <strong>Choose renewable energy</strong>
-              <span>Where available, switching your electricity plan or adding solar panels sends direct demand toward cleaner power generation.</span>
+              <span>Where available, switching your electricity plan or adding solar panels sends direct demand toward
+                cleaner power generation.</span>
             </span>
           </li>
           <li>
             <span class="mark"></span>
             <span>
               <strong>Use your voice and vote</strong>
-              <span>Policy shapes the systems everyone operates within. Supporting climate-minded policy and leaders scales far beyond individual habits.</span>
+              <span>Policy shapes the systems everyone operates within. Supporting climate-minded policy and leaders
+                scales far beyond individual habits.</span>
             </span>
           </li>
         </ul>
@@ -126,7 +163,8 @@
 
     <section class="section">
       <div class="wrap">
-        <p class="callout">The most effective action most people can take is treating this as a shared, solvable problem — and acting like it.</p>
+        <p class="callout">The most effective action most people can take is treating this as a shared, solvable problem
+          — and acting like it.</p>
       </div>
     </section>
 
@@ -134,7 +172,8 @@
       <div class="wrap">
         <div>
           <h2>Start with what you just read.</h2>
-          <p>Revisit the causes and effects whenever you need the full picture again — understanding the problem clearly is the first real step.</p>
+          <p>Revisit the causes and effects whenever you need the full picture again — understanding the problem clearly
+            is the first real step.</p>
         </div>
         <div class="hero-actions">
           <a href="index.html" class="btn btn-primary">Back to overview</a>
@@ -155,10 +194,12 @@
           <li><a href="solutions.html">Solutions</a></li>
         </ul>
       </div>
-      <p class="footer-note">An educational project about climate change. Figures are drawn from widely published climate science summaries and rounded for readability.</p>
+      <p class="footer-note">An educational project about climate change. Figures are drawn from widely published
+        climate science summaries and rounded for readability.</p>
     </div>
   </footer>
 
   <script src="js/script.js"></script>
 </body>
+
 </html>

@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Apply saved theme before CSS renders, to avoid a light-mode flash -->
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem("theme");
+        var theme = savedTheme === "dark" ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Effects of Climate Change — The Thaw Line</title>
   <meta name="description" content="How rising temperatures are already changing weather, sea levels, ecosystems, and human life.">
@@ -15,15 +27,21 @@
   <header class="site-header">
     <nav class="nav">
       <a href="index.html" class="brand"><span class="brand-mark"></span>The Thaw Line</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="causes.html">Causes</a></li>
-        <li><a href="effects.html">Effects</a></li>
-        <li><a href="solutions.html">Solutions</a></li>
-      </ul>
-      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="causes.html">Causes</a></li>
+          <li><a href="effects.html">Effects</a></li>
+          <li><a href="solutions.html">Solutions</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+          <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+          <span class="theme-toggle-label">Dark</span>
+        </button>
+        <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </nav>
   </header>
 

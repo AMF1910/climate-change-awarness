@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   setupBarChartReveal();
   setupCountUp();
   setupWeatherWidget();
+  setupThemeToggle();
 });
+
 
 function setActiveNavLink() {
   const links = document.querySelectorAll(".nav-links a");
@@ -28,10 +30,7 @@ function setActiveNavLink() {
   });
 }
 
-/**
- * 2. Toggle the mobile navigation menu open/closed and
- * close it automatically after a link is chosen.
- */
+
 function setupMobileNav() {
   const toggle = document.querySelector(".nav-toggle");
   const menu = document.querySelector(".nav-links");
@@ -58,10 +57,7 @@ function setupMobileNav() {
   });
 }
 
-/**
- * 3. Add a subtle shadow to the sticky header once the
- * page has been scrolled, so it visually separates from content.
- */
+
 function setupHeaderScrollShadow() {
   const header = document.querySelector(".site-header");
   if (!header) return;
@@ -72,6 +68,7 @@ function setupHeaderScrollShadow() {
   updateShadow();
   window.addEventListener("scroll", updateShadow, { passive: true });
 }
+
 
 function setupBarChartReveal() {
   const bars = document.querySelectorAll(".bar");
@@ -96,6 +93,7 @@ function setupBarChartReveal() {
 
   bars.forEach(function (bar) { observer.observe(bar); });
 }
+
 
 function setupCountUp() {
   const targets = document.querySelectorAll("[data-count-to]");
@@ -138,6 +136,7 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
+
 const WEATHER_API_KEY = "8657fe8d117401ade9a53c80ef3622db";
 const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -152,6 +151,15 @@ function setupWeatherWidget() {
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // no page reload
     handleWeatherSearch(input.value, resultEl);
+  });
+
+  // Event delegation for the °C/°F toggle: the result markup is
+  // replaced on every search, so we listen on the stable container
+  // instead of re-binding listeners to buttons that get thrown away.
+  resultEl.addEventListener("click", function (event) {
+    const unitBtn = event.target.closest(".unit-btn");
+    if (!unitBtn) return;
+    setTemperatureUnit(resultEl, unitBtn.getAttribute("data-unit"));
   });
 }
 
@@ -173,6 +181,11 @@ async function handleWeatherSearch(rawLocation, resultEl) {
   }
 }
 
+/**
+ * Requests current weather for a location from OpenWeatherMap
+ * using fetch() + async/await, and returns the parsed JSON.
+ * Throws a user-friendly Error for the UI to display on failure.
+ */
 async function fetchWeather(location) {
   if (WEATHER_API_KEY === "YOUR_API_KEY") {
     throw new Error("Weather API key missing. Add your OpenWeatherMap key to WEATHER_API_KEY in js/script.js.");
@@ -218,7 +231,10 @@ function renderWeatherError(resultEl, message) {
 function renderWeatherResult(resultEl, data) {
   const cityName = data.name || "Unknown location";
   const country = data.sys && data.sys.country ? data.sys.country : "";
-  const temp = data.main && typeof data.main.temp === "number" ? Math.round(data.main.temp) : "—";
+  // Keep the raw, unrounded Celsius reading from the API on the element
+  // itself (data-celsius). Every unit conversion below is computed from
+  // this one stored value, so switching °C ⇄ °F repeatedly never drifts.
+  const celsius = data.main && typeof data.main.temp === "number" ? data.main.temp : null;
   const humidity = data.main && typeof data.main.humidity === "number" ? data.main.humidity : "—";
   const windSpeed = data.wind && typeof data.wind.speed === "number" ? data.wind.speed : "—";
   const condition = data.weather && data.weather[0] ? data.weather[0].main : "—";
@@ -227,6 +243,7 @@ function renderWeatherResult(resultEl, data) {
   const iconUrl = iconCode
     ? "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
     : "";
+  const tempDisplay = celsius === null ? "—" : Math.round(celsius) + "°C";
 
   resultEl.innerHTML =
     '<div class="weather-card">' +
@@ -234,8 +251,12 @@ function renderWeatherResult(resultEl, data) {
     (iconUrl
       ? '<img class="wc-icon" src="' + iconUrl + '" alt="' + escapeHTML(description || condition) + '">'
       : "") +
-    '<span class="wc-temp">' + temp + "°C</span>" +
+    '<span class="wc-temp" data-celsius="' + (celsius === null ? "" : celsius) + '">' + tempDisplay + "</span>" +
     '<span class="wc-condition">' + escapeHTML(description || condition) + "</span>" +
+    '<div class="wc-unit-toggle" role="group" aria-label="Temperature unit">' +
+    '<button type="button" class="unit-btn active" data-unit="C">°C</button>' +
+    '<button type="button" class="unit-btn" data-unit="F">°F</button>' +
+    "</div>" +
     "</div>" +
     "<div>" +
     '<div class="wc-location">' + escapeHTML(cityName) +
@@ -251,8 +272,64 @@ function renderWeatherResult(resultEl, data) {
     "</div>";
 }
 
+
+function setTemperatureUnit(resultEl, unit) {
+  const tempEl = resultEl.querySelector(".wc-temp");
+  if (!tempEl) return;
+
+  const celsiusAttr = tempEl.getAttribute("data-celsius");
+  const celsius = celsiusAttr === "" ? null : parseFloat(celsiusAttr);
+  if (celsius === null || Number.isNaN(celsius)) return;
+
+  const displayValue = unit === "F" ? (celsius * 9) / 5 + 32 : celsius;
+  tempEl.textContent = Math.round(displayValue) + "°" + unit;
+
+  resultEl.querySelectorAll(".unit-btn").forEach(function (btn) {
+    btn.classList.toggle("active", btn.getAttribute("data-unit") === unit);
+  });
+}
+
+/** Minimal HTML-escaping so API text can't break markup if it ever contains special characters. */
 function escapeHTML(str) {
   const div = document.createElement("div");
   div.textContent = String(str);
   return div.innerHTML;
+}
+
+
+function setupThemeToggle() {
+  const toggleBtn = document.getElementById("theme-toggle");
+  if (!toggleBtn) return;
+
+  const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+  updateThemeToggleUI(currentTheme);
+
+  toggleBtn.addEventListener("click", function () {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    const nextTheme = isDark ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", nextTheme);
+    try {
+      localStorage.setItem("theme", nextTheme);
+    } catch (e) {
+      // localStorage can be unavailable (private browsing, disabled storage);
+      // the theme still applies for the current page view either way.
+    }
+    updateThemeToggleUI(nextTheme);
+  });
+}
+
+/** Keeps the toggle's icon, label, and ARIA state in sync with the active theme. */
+function updateThemeToggleUI(theme) {
+  const toggleBtn = document.getElementById("theme-toggle");
+  if (!toggleBtn) return;
+
+  const isDark = theme === "dark";
+  const icon = toggleBtn.querySelector(".theme-toggle-icon");
+  const label = toggleBtn.querySelector(".theme-toggle-label");
+
+  toggleBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
+  toggleBtn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+  if (icon) icon.textContent = isDark ? "☀️" : "🌙";
+  if (label) label.textContent = isDark ? "Light" : "Dark";
 }
