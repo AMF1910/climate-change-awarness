@@ -73,11 +73,6 @@ function setupHeaderScrollShadow() {
   window.addEventListener("scroll", updateShadow, { passive: true });
 }
 
-/**
- * 4a. Animate the bar chart (used on effects.html) so bars
- * grow into view the first time they enter the viewport,
- * rather than animating on every scroll pass.
- */
 function setupBarChartReveal() {
   const bars = document.querySelectorAll(".bar");
   if (!bars.length) return;
@@ -102,11 +97,6 @@ function setupBarChartReveal() {
   bars.forEach(function (bar) { observer.observe(bar); });
 }
 
-/**
- * 4b. Count numeric stats up from 0 to their target value
- * once they scroll into view, for a bit of restrained motion
- * on the headline statistics.
- */
 function setupCountUp() {
   const targets = document.querySelectorAll("[data-count-to]");
   if (!targets.length) return;
@@ -148,20 +138,6 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
-/* =========================================================
-   TASK 2 — LIVE WEATHER API INTEGRATION
-   Uses the OpenWeatherMap "Current Weather Data" endpoint:
-   https://api.openweathermap.org/data/2.5/weather
-
-   ⚠ API KEY — read this before testing:
-   Sign up for a free key at https://openweathermap.org/api,
-   then paste it below in place of "YOUR_API_KEY". This is a
-   placeholder for local/training use only. Never commit a
-   real API key to a public GitHub repository — for a real
-   deployment, call the API from a small backend/serverless
-   proxy (or an environment variable injected at build time)
-   so the key isn't exposed in client-side JavaScript.
-   ========================================================= */
 const WEATHER_API_KEY = "8657fe8d117401ade9a53c80ef3622db";
 const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -197,11 +173,6 @@ async function handleWeatherSearch(rawLocation, resultEl) {
   }
 }
 
-/**
- * Requests current weather for a location from OpenWeatherMap
- * using fetch() + async/await, and returns the parsed JSON.
- * Throws a user-friendly Error for the UI to display on failure.
- */
 async function fetchWeather(location) {
   if (WEATHER_API_KEY === "YOUR_API_KEY") {
     throw new Error("Weather API key missing. Add your OpenWeatherMap key to WEATHER_API_KEY in js/script.js.");
@@ -280,7 +251,6 @@ function renderWeatherResult(resultEl, data) {
     "</div>";
 }
 
-/** Minimal HTML-escaping so API text can't break markup if it ever contains special characters. */
 function escapeHTML(str) {
   const div = document.createElement("div");
   div.textContent = String(str);
