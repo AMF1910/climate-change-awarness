@@ -1,7 +1,4 @@
-/* =========================================================
-   THE THAW LINE — Climate Change Awareness Site
-   Design tokens
-   ========================================================= */
+
 :root {
   /* Color */
   --ink: #14261F;          /* near-black deep pine, primary text */
@@ -165,9 +162,6 @@ button { font-family: inherit; }
 .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* =========================================================
-   Hero
-   ========================================================= */
 .hero {
   padding: clamp(3rem, 8vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4rem);
   border-bottom: 1px solid var(--line);
@@ -217,9 +211,6 @@ button { font-family: inherit; }
 }
 .spark svg { width: 100%; height: auto; display: block; }
 
-/* =========================================================
-   Buttons
-   ========================================================= */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -243,9 +234,6 @@ button { font-family: inherit; }
 }
 .btn-ghost:hover { background: var(--paper-raised); }
 
-/* =========================================================
-   Sections generic
-   ========================================================= */
 .section {
   padding: clamp(3rem, 7vw, 5.5rem) 0;
   border-bottom: 1px solid var(--line);
@@ -271,9 +259,6 @@ button { font-family: inherit; }
 .explainer .diagram svg { width: 100%; height: auto; }
 .explainer-text p { color: var(--ink-soft); }
 
-/* =========================================================
-   Stat strip
-   ========================================================= */
 .stat-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -330,9 +315,6 @@ button { font-family: inherit; }
   padding-top: 0.6rem;
 }
 
-/* =========================================================
-   Row list — used for Causes / Effects / Solutions pages
-   ========================================================= */
 .row-list { border-top: 1px solid var(--line); }
 .row-item {
   display: grid;
@@ -367,9 +349,6 @@ button { font-family: inherit; }
   color: var(--ink-soft);
 }
 
-/* =========================================================
-   Bar chart (animated on scroll via JS)
-   ========================================================= */
 .bar-chart {
   display: flex;
   align-items: flex-end;
@@ -410,9 +389,6 @@ button { font-family: inherit; }
   margin-bottom: 0.3rem;
 }
 
-/* =========================================================
-   Checklist (Solutions page)
-   ========================================================= */
 .checklist {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -447,9 +423,6 @@ button { font-family: inherit; }
 .checklist strong { display: block; color: var(--ink); }
 .checklist span { color: var(--ink-soft); font-size: 0.92rem; }
 
-/* =========================================================
-   Quote / callout
-   ========================================================= */
 .callout {
   border-left: 3px solid var(--pine);
   padding-left: 1.5rem;
@@ -459,9 +432,6 @@ button { font-family: inherit; }
   max-width: 46ch;
 }
 
-/* =========================================================
-   CTA
-   ========================================================= */
 .cta {
   background: var(--pine);
   color: var(--paper);
@@ -487,9 +457,7 @@ button { font-family: inherit; }
 }
 .cta .btn-ghost:hover { background: rgba(238, 242, 238, 0.1); }
 
-/* =========================================================
-   Page intro (used on Causes / Effects / Solutions)
-   ========================================================= */
+
 .page-intro {
   padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(1.5rem, 4vw, 2.5rem);
 }
@@ -504,9 +472,7 @@ button { font-family: inherit; }
   max-width: 58ch;
 }
 
-/* =========================================================
-   Footer
-   ========================================================= */
+
 .site-footer {
   padding: clamp(2rem, 5vw, 3rem) 0;
   background: var(--pine);
@@ -532,9 +498,6 @@ button { font-family: inherit; }
   margin-top: 1.2rem;
 }
 
-/* =========================================================
-   Responsive — Tablet
-   ========================================================= */
 @media (max-width: 900px) {
   .hero .wrap { grid-template-columns: 1fr; }
   .hero-stat { justify-self: start; border-left: none; border-top: 2px solid var(--ember); padding-left: 0; padding-top: 1rem; }
@@ -548,9 +511,7 @@ button { font-family: inherit; }
   .checklist { grid-template-columns: 1fr; }
 }
 
-/* =========================================================
-   Responsive — Mobile
-   ========================================================= */
+
 @media (max-width: 640px) {
   .nav-toggle { display: flex; }
   .nav-links {

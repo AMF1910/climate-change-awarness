@@ -1,11 +1,3 @@
-/* =========================================================
-   THE THAW LINE — script.js
-   Vanilla JS only. Handles:
-   1. Active nav-link detection (per current page)
-   2. Mobile nav toggle
-   3. Sticky header shadow on scroll
-   4. Scroll-triggered bar chart animation + count-up numbers
-   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
   setActiveNavLink();
@@ -15,16 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
   setupCountUp();
 });
 
-/**
- * 1. Highlight the nav link that matches the current page.
- * Works automatically on every page because it reads the
- * current URL rather than relying on a manually-added class.
- */
 function setActiveNavLink() {
   const links = document.querySelectorAll(".nav-links a");
   if (!links.length) return;
 
-  // Get current file name, defaulting to index.html for "/" or ""
   let currentPage = window.location.pathname.split("/").pop();
   if (currentPage === "") currentPage = "index.html";
 
@@ -40,10 +26,7 @@ function setActiveNavLink() {
   });
 }
 
-/**
- * 2. Toggle the mobile navigation menu open/closed and
- * close it automatically after a link is chosen.
- */
+
 function setupMobileNav() {
   const toggle = document.querySelector(".nav-toggle");
   const menu = document.querySelector(".nav-links");
@@ -70,10 +53,7 @@ function setupMobileNav() {
   });
 }
 
-/**
- * 3. Add a subtle shadow to the sticky header once the
- * page has been scrolled, so it visually separates from content.
- */
+
 function setupHeaderScrollShadow() {
   const header = document.querySelector(".site-header");
   if (!header) return;
@@ -85,11 +65,7 @@ function setupHeaderScrollShadow() {
   window.addEventListener("scroll", updateShadow, { passive: true });
 }
 
-/**
- * 4a. Animate the bar chart (used on effects.html) so bars
- * grow into view the first time they enter the viewport,
- * rather than animating on every scroll pass.
- */
+
 function setupBarChartReveal() {
   const bars = document.querySelectorAll(".bar");
   if (!bars.length) return;
@@ -114,11 +90,7 @@ function setupBarChartReveal() {
   bars.forEach(function (bar) { observer.observe(bar); });
 }
 
-/**
- * 4b. Count numeric stats up from 0 to their target value
- * once they scroll into view, for a bit of restrained motion
- * on the headline statistics.
- */
+
 function setupCountUp() {
   const targets = document.querySelectorAll("[data-count-to]");
   if (!targets.length) return;
